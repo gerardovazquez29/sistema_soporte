@@ -21,8 +21,14 @@ opciones = [
 
 mostrar_menu(opciones)
 
-
-
+"""
+tarea:
+En main.py:
+Modifica el final para que el usuario elija una opción del menú usando pedir_numero.
+Si elige una opción que no existe (ejemplo: 99), imprime un mensaje de "Opción no válida".
+Encierra todo el bloque del menú en un try / except general para que si algo falla, 
+no se cierre el programa.
+"""
 
 """
 ==================================================
