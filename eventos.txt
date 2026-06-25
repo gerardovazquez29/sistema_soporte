@@ -1,0 +1,5 @@
+[2026-06-25 17:09:46] Login exitoso del usuario admin
+[2026-06-25 17:09:46] 
+[2026-06-25 17:10:34] Login exitoso del usuario admin
+[2026-06-25 17:10:34] Login exitoso del usuario admin
+[2026-06-25 17:18:34] Login exitoso del usuario admin
