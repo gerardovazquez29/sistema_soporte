@@ -8,3 +8,6 @@ def registrar_eventos(mensaje: str):
     print("LOG: Evento registrado en el archivo.")
     
     
+def registrar_error(error_desc: str):
+    registrar_eventos(f"CRITICAL_ERROR | {error_desc}")
+    

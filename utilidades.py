@@ -13,4 +13,12 @@ def mostrar_menu(opciones: list):
         print(f" {i}. {opcion}")
     print("="*50)
     
-    
+
+def pedir_numero(mensaje: str) -> int:
+    while True:
+        try:
+            valor = int(input(mensaje))
+            return valor
+        except ValueError:
+            print("ERROR: Por favor, ingresa un numero entero valido.")
+
