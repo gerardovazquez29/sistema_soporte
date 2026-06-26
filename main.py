@@ -1,5 +1,5 @@
 from utilidades import mostrar_encabezado, mostrar_menu, pedir_numero
-from usuarios import listar_usuarios, login
+from usuarios import listar_usuarios, login, listar_usuarios_db
 from database import test_conexion
 
 
@@ -10,10 +10,10 @@ mostrar_encabezado()
 login("admin", "1234")
 
 # Mostramos usuarios
-listar_usuarios()
+listar_usuarios_db()
 
 # nos conectamos a PostgreSQL
-test_conexion()
+#test_conexion()
 
 # Mostramos el menu
 opciones = [

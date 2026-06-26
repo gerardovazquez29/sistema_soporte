@@ -1,7 +1,24 @@
 # modulos de gestion de usuarios
-
+from database import conectar_db
 from config import ADMIN_USER, ADMIN_CLAVE, MAX_INTENTOS
 from logs import registrar_eventos
+
+
+# conectar con postgresql
+def listar_usuarios_db():
+    conn = conectar_db()
+    if conn:
+        cursor = conn.cursor() # el cursor es nuestro puntero en la DB
+        cursor.execute("SELECT id, nombre, rol, activo FROM usuarios;")
+        usuarios = cursor.fetchall() # traemos todas las filas
+        
+        print("\n=== USUARIOS DESDE POSTGRESQL ===")
+        for u in usuarios:
+            # En SQL, los resultados vienen como Tuplas 
+            estado = "Activo" if u[3] else "Inactivo"
+            print(f" [{u[0]}] {u[1]} | Rol: {u[2]} | {estado}")
+        cursor.close()
+        conn.close()
 
 
 # Base de Datos temporal (despuews conectarla a postgreSQL)
