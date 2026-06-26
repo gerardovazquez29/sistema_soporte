@@ -1,5 +1,6 @@
-from utilidades import mostrar_encabezado, mostrar_menu
+from utilidades import mostrar_encabezado, mostrar_menu, pedir_numero
 from usuarios import listar_usuarios, login
+from database import test_conexion
 
 
 # Mostramos el encabezado
@@ -11,6 +12,9 @@ login("admin", "1234")
 # Mostramos usuarios
 listar_usuarios()
 
+# nos conectamos a PostgreSQL
+test_conexion()
+
 # Mostramos el menu
 opciones = [
     "Gestionar usuarios",
@@ -19,16 +23,27 @@ opciones = [
     "Salir"
 ]
 
-mostrar_menu(opciones)
-
-"""
-tarea:
-En main.py:
-Modifica el final para que el usuario elija una opción del menú usando pedir_numero.
-Si elige una opción que no existe (ejemplo: 99), imprime un mensaje de "Opción no válida".
-Encierra todo el bloque del menú en un try / except general para que si algo falla, 
-no se cierre el programa.
-"""
+while True:
+    try:
+        mostrar_menu(opciones)
+        numero = pedir_numero("ingresa una opcion: ")
+        if numero == 1:
+            print("Bienvenido: Gestionar usuarios")
+            break
+        elif numero == 2:
+            print("Bienvenido: Ver tickets")
+            break
+        elif numero == 3:
+            print("Bienvenido: Inventario de equipos")
+            break
+        elif numero == 4:
+            print("hasta pronto")
+            break
+        else:
+            print("Opcion no valida")
+    except Exception as e:
+        print(f"Error inesperado {e}")
+        break
 
 """
 ==================================================
