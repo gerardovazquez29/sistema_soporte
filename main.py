@@ -1,5 +1,5 @@
 from utilidades import mostrar_encabezado, mostrar_menu, pedir_numero
-from usuarios import listar_usuarios, login, listar_usuarios_db
+from usuarios import listar_usuarios, login, listar_usuarios_db, registrar_usuario_db, actualizar_rol_usuario_db
 from database import test_conexion
 
 
@@ -18,6 +18,7 @@ listar_usuarios_db()
 # Mostramos el menu
 opciones = [
     "Gestionar usuarios",
+    "Actualizar usuarios",
     "Ver tickets",
     "Inventario de equipos",
     "Salir"
@@ -28,15 +29,27 @@ while True:
         mostrar_menu(opciones)
         numero = pedir_numero("ingresa una opcion: ")
         if numero == 1:
-            print("Bienvenido: Gestionar usuarios")
+            print(f"\n--- REGISTRO DE NUEVO USUARIO ---")
+            nom = input("Nombre del usuario: ")
+            puesto = input("Rol (admin/tecnico/viewer): ")
+            registrar_usuario_db(nom, puesto)
+            # despues de registrar, mostramos la lista actualiozada
+            listar_usuarios_db()
             break
         elif numero == 2:
-            print("Bienvenido: Ver tickets")
+            print("Actualizacion de usuarios")
+            nom = input("Nombre del usuario: ")
+            puesto = input("nuevo rol (admin/tecnico/viewer): ")
+            actualizar_rol_usuario_db(nom, puesto)
+            listar_usuarios_db()
             break
         elif numero == 3:
-            print("Bienvenido: Inventario de equipos")
+            print("Bienvenido: Ver tickets")
             break
         elif numero == 4:
+            print("Bienvenido: Inventario de equipos")
+            break
+        elif numero == 5:
             print("hasta pronto")
             break
         else:
