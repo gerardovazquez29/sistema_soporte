@@ -68,7 +68,51 @@ def actualizar_rol_usuario_db(nombre: str, nuevo_rol: str):
             cursor.close()
             conn.close()
             
-         
+# Soft Delete (Recomendada en producción)
+def desactivar_usuario_db(nombre: str):
+    conn = conectar_db()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            query = "UPDATE usuarios SET activo = FALSE WHERE nombre = %s;"
+            cursor.execute(query, (nombre,))
+            conn.commit()
+            
+            if cursor.rowcount > 0:
+                print(f" Usuario '{nombre}' desactivado.")
+                registrar_eventos(f"Usuario desactivado: {nombre}")
+            else:
+                print(f" No se encontro al usuario '{nombre}'.")
+        except Exception as e:
+            print(f"Error: {e}") 
+            conn.rollback()
+        finally:
+            cursor.close()
+            conn.close()
+
+# Hard Delete (Borrado permanente)
+def eliminar_usuario_db(nombre: str):
+    conn = conectar_db()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            query = "DELETE FROM usuarios WHERE nombre = %s;"
+            cursor.execute(query, (nombre,))
+            conn.commit()
+            
+            if cursor.rowcount > 0:
+                print(f"Usuario '{nombre}' eliminado permanentemente.")
+                registrar_eventos(f"Usuario eliminado: {nombre}")
+            else:
+                print(f"No se encontro al usuario '{nombre}'.")
+        except Exception as e:
+            print(f" Error: {e}")
+            conn.rollback()
+        finally:
+            cursor.close()
+            conn.close()
+
+
 
 # Base de Datos temporal (despuews conectarla a postgreSQL)
 
@@ -99,4 +143,62 @@ def login(user: str, clave: str) -> bool:
         return True
     print("\n Credenciales incorrectas.")
     return False
+
+def menu_gestionar_usuarios():
+    opciones = [
+        "Registrar nuevo usuario",
+        "Actualizar rol de usuario",
+        "Desactivar usuario",
+        "Eliminar usuario permanentemente",
+        "Volver al menu principal"
+    ]
+    
+    while True:
+        print("\n --- GESTION DE USUARIOS ---")
+        for i, op in enumerate(opciones, 1):
+            print(f" {i}. {op}")
+        print("-"*30)
+        
+        try:
+            numero = int(input("Selecciona una opcion: "))
+            
+            if numero == 1:
+                print("\n --- REGISTRAR NUEVO USUARIO ---")
+                nom = input("Nombre: ")
+                rol = input("Rol (admin/tecnico/viewer): ")
+                registrar_usuario_db(nom,rol)
+                listar_usuarios_db()
+            
+            elif numero == 2:
+                print("\n--- ACTUALIZAR ROL ---")
+                nom = input("Nombre del usuario: ")
+                nuevo_rol = input("Nuevo rol (admin/tecnico/viewer): ")
+                actualizar_rol_usuario_db(nom, nuevo_rol)
+                listar_usuarios_db()
+                
+            elif numero == 3:
+                print("\n--- DESACTIVAR USUARIO ---")
+                nom = input("Nombre del usuario a desactivar: ")
+                desactivar_usuario_db(nom)
+                listar_usuarios_db()
+                
+            elif numero == 4:
+                print("\n--- ELIMINAR USUARIO ---")
+                nom = input("Nombre del usuario a eliminar: ")
+                confirmar = input(f"¿Seguro que deseas eliminar a '{nom}'? (s/n): ")
+                if confirmar.lower() == "s":
+                    eliminar_usuario_db(nom)
+                    listar_usuarios_db()
+                else:
+                    print("Operación cancelada.")
+                    
+            elif numero == 5:
+                print("Volviendo al menú principal...")
+                break
+            else:
+                print("⚠️ Opción no válida.")
+                
+        except ValueError:
+            print("❌ Ingresa un número válido.")
+            
 
