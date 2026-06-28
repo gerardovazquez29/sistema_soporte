@@ -196,9 +196,9 @@ def menu_gestionar_usuarios():
                 print("Volviendo al menú principal...")
                 break
             else:
-                print("⚠️ Opción no válida.")
+                print(" Opción no válida.")
                 
         except ValueError:
-            print("❌ Ingresa un número válido.")
+            print(" Ingresa un número válido.")
             
 
