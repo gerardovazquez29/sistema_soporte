@@ -9,13 +9,13 @@ mostrar_encabezado()
 login("admin", "1234")
 
 # Mostramos usuarios
-listar_usuarios_db()
+#listar_usuarios_db()
 
 # nos conectamos a PostgreSQL
 #test_conexion()
 
 mis_usuarios = obtener_objetos_usuarios()
-
+print("\n=== USUARIOS DESDE POSTGRESQL ===")
 for u in mis_usuarios:
     u.mostrar()
     if u.nombre == "Gerardo":
