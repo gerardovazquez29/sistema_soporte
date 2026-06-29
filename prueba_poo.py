@@ -20,6 +20,10 @@ print("\n=== Cambiando Rol de Santiago ===")
 u1.cambiar_rol("superadmin")
 u1.mostrar()
 
+print("\n=== Reactivando a Gerardo ===")
+u2.reactivar()
+u2.mostrar()
+
 print("\n=== Usando __str__ ===")
 print(u1)
 print(u2)

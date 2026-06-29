@@ -20,7 +20,11 @@ class Usuario:
         self.rol = nuevo_rol
         print(f" Rol de '{self.nombre}' cambiado a '{nuevo_rol}'.")
         
+    def reactivar(self):
+        self.activo = True
+        print(f" Usuario '{self.nombre}' Reactivado")
+    
     def __str__(self):
         return f"Usuario({self.nombre}, {self.rol}, {'Activo' if self.activo else 'Inactivo'})"
 
-
+    
