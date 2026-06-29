@@ -36,3 +36,5 @@
 [2026-06-27 17:37:26] Usuario desactivado: Gerardo
 [2026-06-28 21:53:15] Login exitoso del usuario admin
 [2026-06-28 22:04:24] Login exitoso del usuario admin
+[2026-06-29 07:55:58] INSERT usuario: Carlos | rol: tecnico
+[2026-06-29 07:55:59] UPDATE usuario ID 3: Carlos | tecnico

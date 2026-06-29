@@ -1,8 +1,12 @@
 # Este archivo contendra los moldes (clases) de nuestro sistema
 # clase usuario
+from database import conectar_db
+from logs import registrar_eventos
+from typing import Optional
+
 
 class Usuario:
-    def __init__(self,id: int, nombre: str, rol: str, activo: bool = True):
+    def __init__(self,id: Optional[int], nombre: str, rol: str, activo: bool = True):
         self.id = id
         self.nombre = nombre
         self.rol = rol
@@ -28,3 +32,58 @@ class Usuario:
         return f"Usuario({self.nombre}, {self.rol}, {'Activo' if self.activo else 'Inactivo'})"
 
     
+    def guardar(self):
+        if self.id is None:
+            self._insertar()
+        else:
+            self._actualizar()
+            
+    def _insertar(self):
+        conn = conectar_db()
+        if conn:
+            try:
+                cursor = conn.cursor()
+                query = """
+                        INSERT INTO usuarios (nombre, rol, activo)
+                        VALUES (%s, %s, %s)
+                        RETURNING id;
+                """
+                # RETURNING id le dice a PostgreSQL que nos devuelva
+                # el id que generó automáticamente para el nuevo registro
+                cursor.execute(query, (self.nombre, self.rol, self.activo))
+                resultado = cursor.fetchall()
+                self.id = resultado[0]
+                conn.commit()
+                print(f" Usuario '{self.nombre}' guardado con ID {self.id}.")
+                registrar_eventos(f"INSERT usuario: {self.nombre} | rol: {self.rol}")
+            except Exception as e:
+                print(f" Error al insertar: {e}")
+                conn.rollback()
+            finally:
+                cursor.close()
+                conn.close()
+                
+    def _actualizar(self):
+        conn = conectar_db()
+        if conn:
+            try:
+                cursor = conn.cursor()
+                query = """
+                    UPDATE usuarios
+                    SET nombre = %s, rol = %s, activo = %s
+                    WHERE id = %s
+                """
+                cursor.execute(query,(self.nombre, self.rol, self.activo, self.id))
+                conn.commit()
+                print(f" Usurio '{self.nombre}' actualizado en DB.")
+                registrar_eventos(f"UPDATE usuario ID {self.id}: {self.nombre} | {self.rol}")
+            except Exception as e:
+                print(f"Error al actualizar: {e}")
+                conn.rollback()
+            finally:
+                cursor.close()
+                conn.close()
+                
+                
+                
+            
