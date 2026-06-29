@@ -188,7 +188,8 @@ def menu_gestionar_usuarios():
                 print("\n --- REGISTRAR NUEVO USUARIO ---")
                 nom = input("Nombre: ")
                 rol = input("Rol (admin/tecnico/viewer): ")
-                registrar_usuario_db(nom,rol)
+                nuevo = Usuario(None, nom, rol)
+                nuevo.guardar()
                 listar_usuarios_db()
             
             elif numero == 2:
@@ -201,7 +202,17 @@ def menu_gestionar_usuarios():
             elif numero == 3:
                 print("\n--- DESACTIVAR USUARIO ---")
                 nom = input("Nombre del usuario a desactivar: ")
-                desactivar_usuario_db(nom)
+                usuarios_actuales = obtener_objetos_usuarios()
+                encontrado = False
+                
+                for u in usuarios_actuales:
+                    if u.nombre.lower() == nom.lower():
+                        u.desactivar()
+                        u.guardar()
+                        encontrado = True
+                        break
+                if not encontrado:
+                    print(f" Nose encontro el usuario '{nom}'.")
                 listar_usuarios_db()
                 
             elif numero == 4:

@@ -51,7 +51,11 @@ class Usuario:
                 # RETURNING id le dice a PostgreSQL que nos devuelva
                 # el id que generó automáticamente para el nuevo registro
                 cursor.execute(query, (self.nombre, self.rol, self.activo))
-                resultado = cursor.fetchall()
+                resultado = cursor.fetchone()
+                if resultado is None:
+                    print(" No se recibió el id generado al insertar el usuario.")
+                    conn.rollback()
+                    return
                 self.id = resultado[0]
                 conn.commit()
                 print(f" Usuario '{self.nombre}' guardado con ID {self.id}.")
@@ -75,7 +79,7 @@ class Usuario:
                 """
                 cursor.execute(query,(self.nombre, self.rol, self.activo, self.id))
                 conn.commit()
-                print(f" Usurio '{self.nombre}' actualizado en DB.")
+                print(f" Usuario '{self.nombre}' actualizado en DB.")
                 registrar_eventos(f"UPDATE usuario ID {self.id}: {self.nombre} | {self.rol}")
             except Exception as e:
                 print(f"Error al actualizar: {e}")

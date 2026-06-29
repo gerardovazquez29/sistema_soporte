@@ -1,6 +1,5 @@
 # prueba_active_record.py
 from modelos import Usuario
-from database import conectar_db
 from usuarios import obtener_objetos_usuarios
 
 print("=== PRUEBA ACTIVE RECORD ===\n")
@@ -11,7 +10,7 @@ nuevo = Usuario(None, "Carlos", "tecnico")
 nuevo.guardar()
 print(f"ID asignado por PostgreSQL: {nuevo.id}\n")
 
-# ─── PRUEBA 1: Crear usuario nuevo y guardarlo ───
+# ─── PRUEBA 2: ver todos los usuarios ───
 print("--- Usuarios actuales en DB ---")
 usuarios = obtener_objetos_usuarios()
 for u in usuarios:
@@ -19,10 +18,10 @@ for u in usuarios:
     
 # ─── PRUEBA 3: Modificar y guardar ───
 print("\n--- Desactivando a Carlos ---")
-for u in usuarios:
-    if u.nombre == "Carlos":
-        u.desactivar()
-        u.guardar()
+nuevo.desactivar()
+nuevo.guardar()
+
+# ─── PRUEBA 4: Estado final ───
 print("\n--- Estado final en DB ---")
 usuarios_final = obtener_objetos_usuarios()
 for u in usuarios_final:

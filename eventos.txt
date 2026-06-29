@@ -38,3 +38,11 @@
 [2026-06-28 22:04:24] Login exitoso del usuario admin
 [2026-06-29 07:55:58] INSERT usuario: Carlos | rol: tecnico
 [2026-06-29 07:55:59] UPDATE usuario ID 3: Carlos | tecnico
+[2026-06-29 08:21:22] INSERT usuario: Carlos | rol: tecnico
+[2026-06-29 08:21:22] UPDATE usuario ID 3: Carlos | tecnico
+[2026-06-29 08:21:22] UPDATE usuario ID 4: Carlos | tecnico
+[2026-06-29 08:45:00] INSERT usuario: Carlos | rol: tecnico
+[2026-06-29 08:45:00] UPDATE usuario ID 5: Carlos | tecnico
+[2026-06-29 09:06:46] Login exitoso del usuario admin
+[2026-06-29 09:07:25] INSERT usuario: Jorge | rol: tecnico
+[2026-06-29 09:07:52] UPDATE usuario ID 6: Jorge | tecnico
