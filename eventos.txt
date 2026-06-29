@@ -34,3 +34,4 @@
 [2026-06-27 16:49:52] Update usuario: Gerardo ahora es admin
 [2026-06-27 17:37:03] Login exitoso del usuario admin
 [2026-06-27 17:37:26] Usuario desactivado: Gerardo
+[2026-06-28 21:53:15] Login exitoso del usuario admin

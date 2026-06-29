@@ -1,5 +1,5 @@
 from utilidades import mostrar_encabezado, mostrar_menu, pedir_numero
-from usuarios import login, listar_usuarios_db, menu_gestionar_usuarios
+from usuarios import login, listar_usuarios_db, menu_gestionar_usuarios, obtener_objetos_usuarios
 
 
 # Mostramos el encabezado
@@ -13,6 +13,13 @@ listar_usuarios_db()
 
 # nos conectamos a PostgreSQL
 #test_conexion()
+
+mis_usuarios = obtener_objetos_usuarios()
+
+for u in mis_usuarios:
+    u.mostrar()
+    if u.nombre == "Gerardo":
+        u.reactivar()
 
 # Mostramos el menu
 opciones = [

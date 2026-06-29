@@ -2,6 +2,28 @@
 from database import conectar_db
 from config import ADMIN_USER, ADMIN_CLAVE, MAX_INTENTOS
 from logs import registrar_eventos
+from modelos import Usuario
+
+def obtener_objetos_usuarios():
+    conn = conectar_db()
+    lista_objetos = []
+    
+    if conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, nombre, rol, activo FROM usuarios;")
+            filas = cursor.fetchall()
+            
+            for f in filas:
+                nuevo_usuario = Usuario(f[0], f[1], f[2], f[3])
+                lista_objetos.append(nuevo_usuario)
+                
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            cursor.close()
+            conn.close()
+    return lista_objetos
 
 
 # conectar con postgresql
