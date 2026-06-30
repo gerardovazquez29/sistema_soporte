@@ -46,3 +46,4 @@
 [2026-06-29 09:06:46] Login exitoso del usuario admin
 [2026-06-29 09:07:25] INSERT usuario: Jorge | rol: tecnico
 [2026-06-29 09:07:52] UPDATE usuario ID 6: Jorge | tecnico
+[2026-06-30 14:48:49] Login exitoso del usuario admin

@@ -6,12 +6,34 @@ from typing import Optional
 
 
 class Usuario:
+    ROLES_PERMITIDOS = ["admin", "tecnico", "viewer"]
+    
     def __init__(self,id: Optional[int], nombre: str, rol: str, activo: bool = True):
         self.id = id
         self.nombre = nombre
         self.rol = rol
         self.activo = activo
         
+    @property    
+    def nombre(self):
+         return self._nombre
+     
+    @nombre.setter
+    def nombre(self, valor):
+        if len(valor.strip()) < 3:
+            raise ValueError("El nombre debe tener al menos 3 caracteres.")
+        self._nombre = valor.strip()
+    
+    @property
+    def rol(self):
+        return self._rol
+    
+    @rol.setter
+    def rol(self, valor):
+        if valor.lower() not in self.ROLES_PERMITIDOS:
+            raise ValueError(f"Rol invalido. Debe ser uno de: {self.ROLES_PERMITIDOS}")
+        self._rol = valor.lower()
+    
     def mostrar(self):
         estado = "Activo" if self.activo else "Inactivo"
         print(f" [{self.id}] {self.nombre} | Rol: {self.rol} | {estado}")
