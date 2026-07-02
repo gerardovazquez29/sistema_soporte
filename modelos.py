@@ -3,6 +3,7 @@
 from database import conectar_db
 from logs import registrar_eventos
 from typing import Optional
+from errores import NombreInvalidoError, RolInvalidoError
 
 
 class Usuario:
@@ -21,7 +22,7 @@ class Usuario:
     @nombre.setter
     def nombre(self, valor):
         if len(valor.strip()) < 3:
-            raise ValueError("El nombre debe tener al menos 3 caracteres.")
+            raise NombreInvalidoError("El nombre debe tener al menos 3 caracteres.")
         self._nombre = valor.strip()
     
     @property
@@ -31,7 +32,7 @@ class Usuario:
     @rol.setter
     def rol(self, valor):
         if valor.lower() not in self.ROLES_PERMITIDOS:
-            raise ValueError(f"Rol invalido. Debe ser uno de: {self.ROLES_PERMITIDOS}")
+            raise RolInvalidoError(f"El rol '{valor}' no existe. Debe ser uno de: {self.ROLES_PERMITIDOS}")
         self._rol = valor.lower()
     
     def mostrar(self):
@@ -110,6 +111,18 @@ class Usuario:
                 cursor.close()
                 conn.close()
                 
-                
-                
+class Ticket:
+    def __init__(self, id, asunto: str, descripcion: str, creado_por: Usuario):
+        self.id = id
+        self.asunto = asunto
+        self.descripcion = descripcion
+        self.creado_por = creado_por
+        self.estado = "Abierto"
+        
+    def mostrar_ticket(self):
+        print(f"\n[Ticket #{self.id}] - {self.asunto}")
+        print(f"Estado: {self.estado}")
+        print(f"Reportado por: {self.creado_por.nombre} (Rol: {self.creado_por.rol})")
+        print(f"Descripcion: {self.descripcion}")
+        
             
